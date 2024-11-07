@@ -12,14 +12,5 @@
         <button type="submit">查询</button>
     </form>
 
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-
-    {% if weather_info %}
-        <h2>查询城市：{{ city }}</h2>
-        <p>当前温度: {{ weather_info.temperature }}℃</p>
-        <p>天气状况: {{ weather_info.weather }}</p>
-    {% endif %}
 </body>
 </html>
