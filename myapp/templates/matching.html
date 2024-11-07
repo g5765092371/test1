@@ -1,73 +1,27 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>信息完善</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .container {
-            width: 70%;
-            margin: 0 auto;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-        }
-        .btn-submit {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-submit:hover {
-            background-color: #0056b3;
-        }
-        .submitted-data {
-            margin-top: 30px;
-        }
-        .submitted-data h3 {
-            text-align: center;
-        }
-        .data-display {
-            background-color: #f4f4f4;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .data-display p {
-            margin: 5px 0;
-        }
-    </style>
+    <title>服装推荐</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>信息完善</h1>
-        <form id="recommendation-form" action="/personinf/" method="post">
+        <h1>服装推荐</h1>
+        <form id="recommendation-form" action="{% url 'show_weather' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
-                <label for="sex">性别:</label>
-                <select class="form-control" id="sex" name="sex" required>
+                <label for="occasion">场合:</label>
+                <select class="form-form-control" id="occasion" name="occasion" required>
                     <option value="">请选择</option>
-                    <option value="Male">男</option>
-                    <option value="Female">女</option>
+                    <option value="商务">商务</option>
+                    <option value="宴会">宴会</option>
+                    <option value="婚礼">婚礼</option>
+                    <option value="文艺演出">文艺演出</option>
+                    <option value="休闲">休闲</option>
+                    <option value="度假">度假</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="height">身高 (cm):</label>
-                <input type="number" class="form-control" id="height" name="height" min="100" max="250" required>
-            </div>
-            <div class="form-group">
-                <label for="weight">体重 (kg):</label>
-                <input type="number" class="form-control" id="weight" name="weight" min="30" max="200" required>
             </div>
             <div class="form-group">
                 <label for="province">省份:</label>
@@ -116,22 +70,37 @@
                     <!-- 城市选项将根据省份选择动态生成 -->
                 </select>
             </div>
-            <button type="submit" class="btn-submit">提交数据</button>
-            <a href="http://localhost:8000">返回主页面</a>
+            <button type="submit" class="btn btn-primary">提交数据</button>
+            <a href="http://localhost:8000" class="btn btn-secondary">返回主页面</a>
         </form>
         <div class="submitted-data" id="submitted-data">
-            <h3>提交的数据：</h3>
-            <div id="data-display" class="data-display">
-                {{ rlt }}
-            </div>
+            {% if occasion or province or city or weather_info %}
+                <h3>提交的数据：</h3>
+                <p>场合: {{ occasion }}</p>
+                <p>省份: {{ province }}</p>
+                <p>城市: {{ city }}</p>
+                {% if weather_info %}
+                    <p>当前温度: {{ weather_info.temperature }}℃</p>
+                    <p>温度描述: {{ tem }}</p>
+                    <p>天气状况: {{ weather_info.weather }}</p>
+                {% endif %}
+            {% endif %}
             {% if error %}
-        <p style="color: red;">{{ error }}</p>
-        {% endif %}
-
-        {% if weather_info %}
-            <p>当前温度: {{ weather_info.temperature }}℃</p>
-            <p>天气状况: {{ weather_info.weather }}</p>
-        {% endif %}
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+            <h3>为你推荐穿搭：</h3>
+            {% if clothes %}
+                <div class="row">
+                    {% for cloth in clothes %}
+                        <div class="col-md-4">
+                            <img src="{% static 'assets/images/'|add:cloth.title|add:'.jpg' %}" alt="{{ cloth.title }}" class="img-fluid">
+                            <p>{{ cloth.title }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>暂时没有推荐的衣物。</p>
+            {% endif %}
         </div>
     </div>
 

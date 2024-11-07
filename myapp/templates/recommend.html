@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <title>推荐页面</title>
+    <link rel="stylesheet" href="{% static 'assets/css/recommend.css' %}">
 </head>
 <body>
+    <header>
+        <h1>推荐页面</h1>
+    </header>
     <form method="post">
         {% csrf_token %}
         <label for="word">输入关键词:</label>
@@ -12,25 +17,27 @@
     </form>
 
     {% if word %}
-        <h2>关键词: {{ word }}</h2>
-        <h3>联想词:</h3>
-        <ul>
-            {% for word in baidu_words %}
-                <li>{{ word }}</li>
+        <section>
+            <h2>关键词: {{ word }}</h2>
+            <h3>联想词:</h3>
+            <ul>
+                {% for word in baidu_words %}
+                    <li>{{ word }}</li>
+                {% endfor %}
+            </ul>
+            <h3>百度搜索结果:</h3>
+            {% for result in baidu_results %}
+                <div class="result">
+                    <h4><a href="{{ result.link }}" target="_blank">{{ result.title }}</a></h4>
+                    <p>图片列表：</p>
+                    <ul>
+                        {% for image in result.images %}
+                            <li><img src="{{ image }}" alt="Image"></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endfor %}
-        </ul>
-        <h3>百度搜索结果:</h3>
-        {% for result in baidu_results %}
-    <div>
-        <h4><a href="{{ result.link }}" target="_blank">{{ result.title }}</a></h4>
-        <p>图片列表：</p>
-        <ul>
-            {% for image in result.images %}
-                <li><img src="{{ image }}" alt="Image" style="width: 100px;"></li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endfor %}
+        </section>
     {% endif %}
 </body>
 </html>

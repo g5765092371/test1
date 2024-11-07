@@ -11,4 +11,4 @@ class PersonInfoForm(forms.ModelForm):
 class ClothForm(forms.ModelForm):
     class Meta:
         model = Cloth
-        fields = ['title', 'type', 'category', 'color', 'size', 'buytime', 'image']
+        fields = ['title','category', 'color', 'image']

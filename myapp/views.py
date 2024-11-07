@@ -172,19 +172,90 @@ def get_weather(city_name):
 def show_weather(request):
     context = {}
     if request.method == 'POST':
+        occasion = request.POST.get('occasion')
+        province = request.POST.get('province')
         city = request.POST.get('city')
         if city:
             city_code = find_city(data, city)
             if city_code:
                 weather_info = get_weather(city_code)
                 if weather_info:
+                    context['occasion'] = occasion
+                    context['province'] = province
                     context['city'] = city
                     context['weather_info'] = weather_info
+
+                    # 获取温度描述
+                    temperature = int(weather_info['temperature'])
+                    if 15 <= temperature <= 28:
+                        tem = "温度适中"
+                    elif temperature < 15:
+                        tem = "冷"
+                    else:
+                        tem = "热"
+
+                    # 查询匹配的衣物
+                    clothes = Cloth.objects.filter(category__icontains=occasion, color__icontains=tem)
+                    context['clothes'] = clothes
+                    context['tem'] = tem
                 else:
                     context['error'] = f"无法获取{city}的天气信息。"
             else:
                 context['error'] = f"找不到城市代码 {city}。"
         else:
             context['error'] = "请输入有效的城市名或城市代码。"
+    return render(request, 'matching.html', context)
 
-    return render(request, 'weather.html', context)
+# def find_city(data, search_value):
+#     for city in data:
+#         if city[2] == search_value:
+#             return city[3]
+#     return None
+#
+# def get_weather(city_name):
+#     url = f'http://www.weather.com.cn/weather1d/{city_name}.shtml'
+#     headers = {
+#         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+#     }
+#     response = requests.get(url, headers=headers)
+#
+#     if response.status_code != 200:
+#         return None
+#
+#     response.encoding = 'utf-8'
+#     soup = BeautifulSoup(response.text, 'html.parser')
+#
+#     try:
+#         temp = soup.find('p', class_='tem').find('span').text
+#         weather_description = soup.find('p', class_='wea').text
+#         wind = soup.find('p', class_='win').find('i').text
+#
+#         weather_info = {
+#             'temperature': temp,
+#             'weather': weather_description,
+#             'wind': wind
+#         }
+#
+#         return weather_info
+#     except AttributeError:
+#         return None
+#
+# def show_weather(request):
+#     context = {}
+#     if request.method == 'POST':
+#         city = request.POST.get('city')
+#         if city:
+#             city_code = find_city(data, city)
+#             if city_code:
+#                 weather_info = get_weather(city_code)
+#                 if weather_info:
+#                     context['city'] = city
+#                     context['weather_info'] = weather_info
+#                 else:
+#                     context['error'] = f"无法获取{city}的天气信息。"
+#             else:
+#                 context['error'] = f"找不到城市代码 {city}。"
+#         else:
+#             context['error'] = "请输入有效的城市名或城市代码。"
+#
+#     return render(request, 'weather.html', context)

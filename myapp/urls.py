@@ -8,7 +8,8 @@ urlpatterns = [
     path('closet/', closet, name='closet'),
     path('add_cloth/', add_cloth, name='add_cloth'),
     path('recommend/', recommend, name='recommend'),
-    path('weather/', show_weather, name='show_weather'),
+    # path('weather/', show_weather, name='show_weather'),
+    path('matching/', show_weather, name='show_weather'),
 ]
 
 

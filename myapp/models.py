@@ -6,11 +6,8 @@ from django.db import models
 
 class Cloth(models.Model):
     title = models.CharField(max_length=255)
-    type = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
     color = models.CharField(max_length=255)
-    size = models.CharField(max_length=255)
-    buytime = models.IntegerField()
     image = models.ImageField(upload_to='myapp/', default='default_image.jpg')  # 设置默认值
 
     def __str__(self):
