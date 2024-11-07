@@ -5,96 +5,156 @@
     <meta charset="UTF-8">
     <title>服装推荐</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .card-text {
+            color: #6c757d;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>服装推荐</h1>
-        <form id="recommendation-form" action="{% url 'show_weather' %}" method="post">
+        <h1 class="text-center mb-4">服装推荐</h1>
+        <form id="recommendation-form" action="{% url 'show_weather' %}" method="post" class="mb-4">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="occasion">场合:</label>
-                <select class="form-form-control" id="occasion" name="occasion" required>
-                    <option value="">请选择</option>
-                    <option value="商务">商务</option>
-                    <option value="宴会">宴会</option>
-                    <option value="婚礼">婚礼</option>
-                    <option value="文艺演出">文艺演出</option>
-                    <option value="休闲">休闲</option>
-                    <option value="度假">度假</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="province">省份:</label>
-                <select class="form-control" id="province" name="province" required>
-                    <option value="">请选择</option>
-                    <option value="北京">北京</option>
-                    <option value="天津">天津</option>
-                    <option value="河北">河北</option>
-                    <option value="山西">山西</option>
-                    <option value="内蒙古">内蒙古</option>
-                    <option value="辽宁">辽宁</option>
-                    <option value="吉林">吉林</option>
-                    <option value="黑龙江">黑龙江</option>
-                    <option value="上海">上海</option>
-                    <option value="江苏">江苏</option>
-                    <option value="浙江">浙江</option>
-                    <option value="安徽">安徽</option>
-                    <option value="福建">福建</option>
-                    <option value="江西">江西</option>
-                    <option value="山东">山东</option>
-                    <option value="河南">河南</option>
-                    <option value="湖北">湖北</option>
-                    <option value="湖南">湖南</option>
-                    <option value="广东">广东</option>
-                    <option value="广西">广西</option>
-                    <option value="海南">海南</option>
-                    <option value="重庆">重庆</option>
-                    <option value="四川">四川</option>
-                    <option value="贵州">贵州</option>
-                    <option value="云南">云南</option>
-                    <option value="西藏">西藏</option>
-                    <option value="陕西">陕西</option>
-                    <option value="甘肃">甘肃</option>
-                    <option value="青海">青海</option>
-                    <option value="宁夏">宁夏</option>
-                    <option value="新疆">新疆</option>
-                    <option value="台湾">台湾</option>
-                    <option value="香港">香港</option>
-                    <option value="澳门">澳门</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="city">城市:</label>
-                <select class="form-control" id="city" name="city" required>
-                    <option value="">请选择</option>
-                    <!-- 城市选项将根据省份选择动态生成 -->
-                </select>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="occasion">场合:</label>
+                    <select class="form-control" id="occasion" name="occasion" required>
+                        <option value="">请选择</option>
+                        <option value="商务">商务</option>
+                        <option value="宴会">宴会</option>
+                        <option value="婚礼">婚礼</option>
+                        <option value="文艺演出">文艺演出</option>
+                        <option value="休闲">休闲</option>
+                        <option value="度假">度假</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="province">省份:</label>
+                    <select class="form-control" id="province" name="province" required>
+                        <option value="">请选择</option>
+                        <option value="北京">北京</option>
+                        <option value="天津">天津</option>
+                        <option value="河北">河北</option>
+                        <option value="山西">山西</option>
+                        <option value="内蒙古">内蒙古</option>
+                        <option value="辽宁">辽宁</option>
+                        <option value="吉林">吉林</option>
+                        <option value="黑龙江">黑龙江</option>
+                        <option value="上海">上海</option>
+                        <option value="江苏">江苏</option>
+                        <option value="浙江">浙江</option>
+                        <option value="安徽">安徽</option>
+                        <option value="福建">福建</option>
+                        <option value="江西">江西</option>
+                        <option value="山东">山东</option>
+                        <option value="河南">河南</option>
+                        <option value="湖北">湖北</option>
+                        <option value="湖南">湖南</option>
+                        <option value="广东">广东</option>
+                        <option value="广西">广西</option>
+                        <option value="海南">海南</option>
+                        <option value="重庆">重庆</option>
+                        <option value="四川">四川</option>
+                        <option value="贵州">贵州</option>
+                        <option value="云南">云南</option>
+                        <option value="西藏">西藏</option>
+                        <option value="陕西">陕西</option>
+                        <option value="甘肃">甘肃</option>
+                        <option value="青海">青海</option>
+                        <option value="宁夏">宁夏</option>
+                        <option value="新疆">新疆</option>
+                        <option value="台湾">台湾</option>
+                        <option value="香港">香港</option>
+                        <option value="澳门">澳门</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="city">城市:</label>
+                    <select class="form-control" id="city" name="city" required>
+                        <option value="">请选择</option>
+                        <!-- 城市选项将根据省份选择动态生成 -->
+                    </select>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">提交数据</button>
             <a href="http://localhost:8000" class="btn btn-secondary">返回主页面</a>
         </form>
         <div class="submitted-data" id="submitted-data">
             {% if occasion or province or city or weather_info %}
-                <h3>提交的数据：</h3>
-                <p>场合: {{ occasion }}</p>
-                <p>省份: {{ province }}</p>
-                <p>城市: {{ city }}</p>
+                <h3 class="mb-4">提交的数据：</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><strong>场合:</strong> {{ occasion }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>省份:</strong> {{ province }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>城市:</strong> {{ city }}</p>
+                    </div>
+                </div>
                 {% if weather_info %}
-                    <p>当前温度: {{ weather_info.temperature }}℃</p>
-                    <p>温度描述: {{ tem }}</p>
-                    <p>天气状况: {{ weather_info.weather }}</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><strong>当前温度:</strong> {{ weather_info.temperature }}℃</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>温度描述:</strong> {{ tem }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>天气状况:</strong> {{ weather_info.weather }}</p>
+                        </div>
+                    </div>
                 {% endif %}
             {% endif %}
             {% if error %}
-                <p style="color: red;">{{ error }}</p>
+                <p class="error-message">{{ error }}</p>
             {% endif %}
-            <h3>为你推荐穿搭：</h3>
+            <h3 class="mb-4">为你推荐穿搭：</h3>
             {% if clothes %}
                 <div class="row">
                     {% for cloth in clothes %}
-                        <div class="col-md-4">
-                            <img src="{% static 'assets/images/'|add:cloth.title|add:'.jpg' %}" alt="{{ cloth.title }}" class="img-fluid">
-                            <p>{{ cloth.title }}</p>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="{% static 'assets/images/'|add:cloth.title|add:'.jpg' %}" alt="{{ cloth.title }}" class="card-img-top img-fluid">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ cloth.title }}</h5>
+                                    <p class="card-text">{{ cloth.description|default:"暂无描述" }}</p>
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
