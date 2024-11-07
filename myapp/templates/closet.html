@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>衣橱</title>
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/style1.css' %}"/>
+</head>
+<body>
+<div class="main">
+    <div class="dy-content">
+        <div class="dy-videos">
+            <ul class="dy-video-list">
+                {% for cloth in cloths %}
+                <li data- class="dy-video-item dy-video-meta-right">
+                    <div class="dy-video-meta">
+                        <div class="dy-video-meta-bg"> </div>
+                        <div class="dy-video-meta-dy">
+                            <h4 class="dy-video-title"> <a>{{ cloth.title }}</a> </h4>
+                            <span class="dy-video-rating">风格：{{ cloth.type }}</span>
+                            <ul class="dy-video-meta-list">
+                                <li class="dy-video-actors"> <span class="dy-video-tip"> 类别: </span> <a>{{ cloth.category }}</a> </li>
+                                <li class="dy-video-types"> <span class="dy-video-tip">颜色:</span> <span class="dy-video-meta-filter">{{ cloth.color }}</span> </li>
+                                <li class="dy-video-areas"> <span class="dy-split">|</span> <span class="dy-video-tip">尺码:</span> <span class="dy-video-meta-filter">{{ cloth.size }}</span> </li>
+                                <li class="dy-video-starts"> <span class="dy-split">|</span> <span class="dy-video-tip">购买时间:</span> <span class="dy-video-meta-filter">{{ cloth.buytime }}</span> </li>
+                            </ul>
+                        </div>
+                        <div class="dy-video-meta-bg"> </div>
+                    </div>
+                    <div class="dy-video-poster">
+                        <a class="dy-video-link">
+                            <img class="dy-video-img" src="{% static 'assets/images/'|add:cloth.title|add:'.jpg' %}" alt="{{ cloth.title }}">
+                            <span class="dy-video-nocomplete"></span>
+                            <span class="dy-video-date"> {{ cloth.buytime }} 年 </span>
+                            <span class="dy-video-bg"></span>
+                            <span class="s-pay"></span>
+                        </a>
+                    </div>
+                    <div class="dy-video-primary">
+                        <h4 class="dy-video-title"><a>{{ cloth.title }}</a> </h4>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <a href="http://localhost:8000">返回主页面</a>
+</div>
+</body>
+</html>

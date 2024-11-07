@@ -1,0 +1,106 @@
+<!-- add_cloth.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加衣物</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style1.css' %}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .main {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="date"],
+        select,
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+        @media (max-width: 768px) {
+        .main {
+            margin: 20px auto;
+            padding: 15px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        input[type="text"],
+        input[type="date"],
+        select,
+        input[type="file"] {
+            font-size: 14px;
+        }
+        button {
+            font-size: 14px;
+        }
+    }
+        .fa-icon {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="dy-content">
+        <h1>添加衣物</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">保存</button>
+        </form>
+        <a href="{% url 'closet' %}">返回衣橱</a>
+<!--        <a href="https://cbu01.alicdn.com/img/ibank/2016/108/385/3466583801_1971099720.220x220.jpg">返回衣橱</a>-->
+    </div>
+</div>
+</body>
+</html>
