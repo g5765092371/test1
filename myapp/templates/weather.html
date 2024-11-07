@@ -4,8 +4,7 @@
     <title>天气查询</title>
 </head>
 <body>
-    <h1>天气查询</h1>
-    <form method="post">
+    <form method="post">+
         {% csrf_token %}
         <label for="city">请输入城市名或城市代码:</label>
         <input type="text" id="city" name="city">
