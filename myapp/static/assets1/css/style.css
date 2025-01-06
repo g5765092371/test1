@@ -1,0 +1,42 @@
+#my-gallery-container {
+	background-color: #ededed;
+}
+p {
+	text-align: center;
+	color: #4d4d4d;
+}
+.item {
+	width: 100%;
+	background-color: white;
+	min-height: 100px;
+	padding: 5px;
+	margin: 10px 0px;
+	box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 4px;
+	border-radius: 4px;,
+	
+}
+
+.item:hover {
+	opacity: 0.5;
+}
+.item p {
+
+}
+.item.h150{
+	width: 100%;
+	min-height: 150px;
+}
+
+.item.h200{
+	width: 100%;
+	min-height: 200px;
+
+}
+
+.item.h250{
+	width: 100%;
+	min-height: 200px;
+}
+.padding{
+	padding: 10px 5px;
+}
