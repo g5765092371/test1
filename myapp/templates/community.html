@@ -8,17 +8,45 @@
     <title>社区</title>
     <link rel="stylesheet" type="text/css" href="https://www.jq22.com/jquery/bootstrap-3.3.4.css">
     <link rel="stylesheet" type="text/css" href="{% static 'assets1/css/style.css' %}">
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap; /* 允许项目换行 */
+            justify-content: flex-start; /* 项目在主轴上的对齐方式 */
+            align-items: stretch; /* 项目在交叉轴上的对齐方式 */
+        }
+
+        .item {
+            flex: 1 1 30%; /* 项目的基础大小，最大大小，以及是否允许缩小 */
+            margin: 1%; /* 项目之间的间距 */
+            text-align: center;
+            display: flex;
+            flex-direction: column; /* 使用垂直布局，使得图片和文字可以在上下方向排列 */
+            justify-content: flex-start; /* 将内容对齐到容器顶部 */
+        }
+
+        .item img {
+            width: 100%;
+            height: auto; /* 保持原始比例 */
+            object-fit: contain; /* 图片自适应容器大小且不失真 */
+        }
+
+        .item p {
+            margin-top: 10px; /* 给文字增加一些间距 */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body style="background-color:#ffffff">
     <div class="container">
-        <!-- 将 h1 放在最上面并明确设置颜色 -->
-        <h1 style="color: black;">Community</h1> <!-- 确保文本颜色不为白色 -->
-        <div class="row" id="my-gallery-container" style="background-color: #ffffff">
-            {% for i in items %}
-            <div class="col-md-3">
-                <div class="item h200" style="height: 300px" data-order="{{ i }}">
-                    <p>item {{ i }}</p>
-                </div>
+        <h1 style="color: black;text-align: center">Community</h1>
+        <div id="my-gallery-container" style="background-color: #ffffff">
+            {% for post in items %}
+            <div class="item" data-order="{{ post.pid }}">
+                <img src="{{ post.image }}" alt="{{ post.pid }}">
+                <a href="{% url 'post_detail' pid=post.pid %}">{{ post.text }}</a>
             </div>
             {% endfor %}
         </div>

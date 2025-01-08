@@ -1,5 +1,7 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import make_password, check_password
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_http_methods
 
 from .forms import PersonInfoForm, ClothForm
 
@@ -48,7 +50,8 @@ def personinf(request):
 
 # views.py
 from django.shortcuts import render
-from .models import Cloth
+from .models import Cloth, Post, PersonInfo
+
 
 def closet(request):
     cloths = Cloth.objects.all()
@@ -206,5 +209,65 @@ def show_weather(request):
             context['error'] = "请输入有效的城市名或城市代码。"
     return render(request, 'matching.html', context)
 def community(request):
-    items = range(100) # 生成一个从 0 到 99 的范围
+    # 从数据库中获取所有的帖子
+    items = Post.objects.all()  # 根据实际需求可以使用不同的查询方式
     return render(request, 'community.html', {'items': items})
+
+
+def post_detail(request, pid):
+    post = get_object_or_404(Post, pk=pid)
+
+    # 点赞功能
+    if request.method == 'POST' and 'like' in request.POST:
+        if post.like==None:
+            post.like=0
+        post.like += 1
+        post.save()
+
+    # 清理特征字符串，移除多余的空格并为每个特征加上 #
+    if post.feature!=None:
+        features = post.feature.split('，')
+        formatted_features = ' '.join([f"#{feature.strip()}" for feature in features if feature.strip()])
+    else:
+        formatted_features = ''
+
+    return render(request, 'post.html', {
+        'post': post,
+        'formatted_features': formatted_features
+    })
+
+
+# 注册视图
+def register(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        password = request.POST.get('password')
+        repeat_password = request.POST.get('repeat_password')
+
+        if password == repeat_password:
+            hashed_password = make_password(password)
+            # 插入数据库
+            PersonInfo.objects.create(name=name, password=hashed_password)
+            return redirect('login')  # 注册成功后跳转到登录页面
+        else:
+            return HttpResponse("密码不一致，请重新输入。")
+
+    return render(request, 'login.html')
+
+
+# 登录视图
+def login(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        password = request.POST.get('password')
+
+        try:
+            user = PersonInfo.objects.get(name=name)
+            if check_password(password, user.password):
+                return redirect('home')  # 登录成功后跳转到首页
+            else:
+                return HttpResponse("密码错误，请重新输入。")
+        except PersonInfo.DoesNotExist:
+            return HttpResponse("用户名不存在，请检查。")
+
+    return render(request, 'login.html')

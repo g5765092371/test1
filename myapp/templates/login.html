@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>登录注册忘记密码页面</title>
+    <link rel="stylesheet" href="{% static 'assets3/css/normalize.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets3/css/style.css' %}">
+</head>
+
+<body>
+    <div id="formContainer" class="dwo">
+        <div class="formLeft">
+            <img src="{% static 'assets3/images/avatar.png' %}">
+        </div>
+        <div class="formRight">
+            <!-- Forgot password form -->
+            <form id="forgot" class="otherForm" method="post">
+                {% csrf_token %}
+                <header>
+                    <h1>忘记密码</h1>
+                    <p>输入邮箱找回密码</p>
+                </header>
+                <section>
+                    <label>
+                        <p>邮箱</p>
+                        <input type="email" name="email" placeholder=" ">
+                        <div class="border"></div>
+                    </label>
+                    <button type="submit">发送邮件</button>
+                </section>
+                <footer>
+                    <button type="button" class="forgotBtn">返回</button>
+                </footer>
+            </form>
+
+            <!-- Login form -->
+            <form id="login" method="post">
+                {% csrf_token %}
+                <header>
+                    <h1>欢迎回来</h1>
+                    <p>请先登录</p>
+                </header>
+                <section>
+                    <label>
+                        <p>用户名</p>
+                        <input type="text" name="name" placeholder=" ">
+                        <div class="border"></div>
+                    </label>
+                    <label>
+                        <p>密码</p>
+                        <input type="password" name="password" placeholder=" ">
+                        <div class="border"></div>
+                    </label>
+                    <button type="submit">登 录</button>
+                </section>
+                <footer>
+                    <button type="button" class="forgotBtn">忘记密码？</button>
+                    <button type="button" class="registerBtn">新用户？</button>
+                </footer>
+            </form>
+
+            <!-- Register form -->
+            <form id="register" class="otherForm" method="post">
+                {% csrf_token %}
+                <header>
+                    <h1>用户注册</h1>
+                    <p>注册后享受更多服务</p>
+                </header>
+                <section>
+                    <label>
+                        <p>用户名</p>
+                        <input type="text" name="name" placeholder=" ">
+                        <div class="border"></div>
+                    </label>
+                    <label>
+                        <p>密码</p>
+                        <input type="password" name="password" placeholder=" ">
+                        <div class="border"></div>
+                    </label>
+                    <label>
+                        <p>重复密码</p>
+                        <input type="password" name="repeat_password" placeholder=" ">
+                        <div class="border"></div>
+                    </label>
+                    <button type="submit">注 册</button>
+                </section>
+                <footer>
+                    <button type="button" class="registerBtn">返回</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'assets3/js/jquery.min.js' %}"></script>
+    <script>
+        $(function () {
+            // Switch between forms (Login, Register)
+            $('.forgotBtn').click(function () {
+                $('#forgot').toggleClass('toggle');
+            });
+
+            $('.registerBtn').click(function () {
+                $('#register, #formContainer').toggleClass('toggle');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情</title>
+    <link rel="stylesheet" type="text/css" href="https://www.jq22.com/jquery/bootstrap-3.3.4.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .post-details {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .post-details img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .post-details p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .like-button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .like-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="text-center">帖子详情</h2>
+        <div class="post-details">
+            <img src="{{ post.image }}" alt="{{ post.pid }}">
+            <p>{{ post.text }}</p><p>{{ formatted_features }}</p>
+            <p><strong>点赞数:</strong> {{ post.like }}</p>
+
+            <!-- 点赞按钮 -->
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="like" class="like-button">点赞</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
