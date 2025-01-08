@@ -4,7 +4,7 @@ from .views import my_view, personinf, closet, add_cloth, recommend, show_weathe
     register
 
 urlpatterns = [
-    path('home/', my_view, name='home'),
+    path('/', my_view, name='my_view'),
     path('personinf/', personinf, name='personinf'),
     path('closet/', closet, name='closet'),
     path('add_cloth/', add_cloth, name='add_cloth'),

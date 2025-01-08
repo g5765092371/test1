@@ -264,7 +264,7 @@ def login(request):
         try:
             user = PersonInfo.objects.get(name=name)
             if check_password(password, user.password):
-                return redirect('home')  # 登录成功后跳转到首页
+                return redirect('my_view')  # 登录成功后跳转到首页
             else:
                 return HttpResponse("密码错误，请重新输入。")
         except PersonInfo.DoesNotExist:
