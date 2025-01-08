@@ -223,6 +223,10 @@ def post_detail(request, pid):
             post.like=0
         post.like += 1
         post.save()
+        return JsonResponse({
+            'success': True,
+            'like_count': post.like
+        })
 
     # 清理特征字符串，移除多余的空格并为每个特征加上 #
     if post.feature!=None:

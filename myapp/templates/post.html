@@ -55,15 +55,43 @@
         <div class="post-details">
             <img src="{{ post.image }}" alt="{{ post.pid }}">
             <p>{{ post.text }}</p><p>{{ formatted_features }}</p>
-            <p><strong>点赞数:</strong> {{ post.like }}</p>
+            <p><strong>点赞数:</strong> <span id="like-count">{{ post.like }}</span></p>
 
             <!-- 点赞按钮 -->
-            <form method="post">
-                {% csrf_token %}
-                <button type="submit" name="like" class="like-button">点赞</button>
-            </form>
+            <button id="like-button" class="like-button">点赞</button>
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 点击点赞按钮
+            $('#like-button').click(function() {
+                var postId = '{{ post.pid }}';  // 获取帖子 ID
+
+                // 发送 AJAX 请求到 Django 视图
+                $.ajax({
+                    url: "{% url 'post_detail' post.pid %}",  // 替换为正确的 URL
+                    type: 'POST',
+                    data: {
+                        'like': true,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // 更新点赞数
+                            $('#like-count').text(response.like_count);
+                        } else {
+                            alert('点赞失败，请稍后再试');
+                        }
+                    },
+                    error: function() {
+                        alert('请求失败，请稍后再试');
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
