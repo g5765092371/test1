@@ -13,12 +13,6 @@ def my_view(request):
 def redirect_to_home(request):
     return redirect('/home/')
 
-# def personinf(request):
-#         ctx = {}
-#         if request.POST:
-#             ctx['rlt'] = '性别为：'+ request.POST['sex']+'，身高为：' + request.POST['height'] + 'cm，体重为：' + request.POST['weight'] + 'kg，省份为：' + \
-#                          request.POST['province']+'，城市为：'+request.POST['city']
-#         return render(request, "personinf.html", ctx)
 def personinf(request):
     ctx = {}
 
