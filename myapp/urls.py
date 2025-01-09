@@ -1,10 +1,10 @@
 from django.urls import path
 
 from .views import my_view, personinf, closet, add_cloth, recommend, show_weather, community, post_detail, login, \
-    register
+    register, redirect_to_home
 
 urlpatterns = [
-    path('/', my_view, name='my_view'),
+    path('', my_view, name='home'),
     path('personinf/', personinf, name='personinf'),
     path('closet/', closet, name='closet'),
     path('add_cloth/', add_cloth, name='add_cloth'),

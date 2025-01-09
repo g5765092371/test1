@@ -1,3 +1,5 @@
+from audioop import reverse
+
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -8,6 +10,8 @@ from .forms import PersonInfoForm, ClothForm
 
 def my_view(request):
     return render(request, 'index.html')
+def redirect_to_home(request):
+    return redirect('/home/')
 
 # def personinf(request):
 #         ctx = {}
@@ -268,7 +272,7 @@ def login(request):
         try:
             user = PersonInfo.objects.get(name=name)
             if check_password(password, user.password):
-                return redirect('my_view')  # 登录成功后跳转到首页
+                return redirect(reverse('home'))  # 登录成功后跳转到首页
             else:
                 return HttpResponse("密码错误，请重新输入。")
         except PersonInfo.DoesNotExist:
